@@ -1,0 +1,46 @@
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+
+const SeatSelection = ({ movieId }) => {
+  const [seats, setSeats] = useState([]);
+  const [selectedSeats, setSelectedSeats] = useState([]);
+
+  useEffect(() => {
+    const fetchSeats = async () => {
+      try {
+        const response = await axios.get(`/api/movies/${movieId}/seats`);
+        setSeats(response.data);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    fetchSeats();
+  }, [movieId]);
+
+  const handleSelectSeat = (seat) => {
+    setSelectedSeats([...selectedSeats, seat]);
+  };
+
+  const handleConfirmBooking = async () => {
+    try {
+      const token = localStorage.getItem('token');
+      await axios.post('/api/book', { movieId, seats: selectedSeats }, { headers: { 'Authorization': `Bearer ${token}` } });
+      alert('Booking confirmed');
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  return (
+    <div>
+      {seats.map((seat) => (
+        <button key={seat.number} onClick={() => handleSelectSeat(seat)} disabled={seat.booked}>
+          {seat.number}
+        </button>
+      ))}
+      <button onClick={handleConfirmBooking}>Confirm Booking</button>
+    </div>
+  );
+};
+
+export default SeatSelection;
