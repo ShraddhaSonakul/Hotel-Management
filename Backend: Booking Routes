@@ -1,3 +1,5 @@
+//backend/models/Movie.js
+_____________________________________________
 const mongoose = require('mongoose');
 
 const movieSchema = new mongoose.Schema({
@@ -15,3 +17,16 @@ const movieSchema = new mongoose.Schema({
 const Movie = mongoose.model('Movie', movieSchema);
 
 module.exports = Movie;
+
+//backend/routes/booking.js
+____________________________________
+const express = require('express');
+const auth = require('../middleware/auth');
+const Movie = require('../models/Movie');
+
+const router = express.Router();
+
+// Get movies
+router.get('/
+
+
