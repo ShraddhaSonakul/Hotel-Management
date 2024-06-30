@@ -1,0 +1,3 @@
+npx create-react-app movie-booking-system
+cd movie-booking-system
+npm install react-bootstrap axios react-router-dom jwt-decode
